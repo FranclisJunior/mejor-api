@@ -1,0 +1,11 @@
+# System Files
+.DS_Store
+Thumbs.db
+npm-debug.log
+
+
+# IDEs and editors
+/.idea
+
+# dependencies
+/node_modules
