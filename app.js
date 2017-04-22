@@ -1,52 +1,63 @@
-var express = require('express'),
-    path = require('path'),
-    favicon = require('serve-favicon'),
-    logger = require('morgan'),
+var bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
-    bodyParser = require('body-parser'),
-    cors = require('cors');
+    cors = require('cors'),
+    express = require('express'),
+    log4js = require('log4js'),
+    path = require('path');
 
+
+// Define DB and Logger
 var db = require('./src/util/db'),
     course = require('./src/model/course'),
+    user = require('./src/model/user'),
     initial_insert = require('./src/util/initial.db.insert');
 
-var routes = require('./src/controllers/index'),
-    courses = require('./src/controllers/courses');
+// Define Controllers
+var index = require('./src/controllers/index'),
+    courses = require('./src/controllers/courses'),
+    users = require('./src/controllers/users');
+
+
 
 var app = express();
 
-// Enable CORS
-app.use(cors({origin:true}));
+// Controllers setup
+app.use('/', index);
+app.use('/api/courses', courses);
+app.use('/api/users', users);
 
-// view engine setup
+
+// View engine setup
 app.set('views', path.join(__dirname, 'src/views'));
 app.set('view engine', 'jade');
 
 
-app.use(logger('dev'));
-app.use(bodyParser.json());
+// Looger setup
+log4js.configure({
+    appenders: [
+        { type: 'console' },
+        { type: 'file', filename: 'logs/mejor-api.log', "maxLogSize": 1e+7}
+    ]
+});
+
+// Others setups
+app.use(bodyParser.json({ extended: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-//Create controllers
-app.use('/', routes);
-app.use('/api/courses', courses);
-
-// catch 404 and forward to error handler
+// Catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
-// error handlers
 
-// development error handler
-// will print stacktrace
+// Development error handler will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
+    app.use(function(err, req, res) {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -55,9 +66,8 @@ if (app.get('env') === 'development') {
     });
 }
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+// Production error handler no stacktraces leaked to user
+app.use(function(err, req, res) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,

@@ -1,8 +1,11 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    log4js = require('log4js');
+
+var logger = log4js.getLogger('INITIAL_DB');
 
 mongoose.model('course').find({}, function (err, blobs) {
     if (blobs.length === 0) {
-        console.log("Creating defaults courses");
+        logger.info("Creating defaults courses");
 
         mongoose.model('course').create({
                 title: 'COURSE_BASIC',
@@ -10,7 +13,7 @@ mongoose.model('course').find({}, function (err, blobs) {
                 price: 6.90
             }, function (err) {
                 if (err) {
-                    console.log(err)
+                    logger.error(err);
                 }
             });
 
@@ -21,7 +24,7 @@ mongoose.model('course').find({}, function (err, blobs) {
             price: 10.90
         }, function (err) {
             if (err) {
-                console.log(err)
+                logger.error(err);
             }
         })
     }

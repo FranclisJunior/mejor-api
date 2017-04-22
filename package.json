@@ -1,5 +1,5 @@
 {
-  "name": "express-node-mongo-skeleton",
+  "name": "mejor-api",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -12,9 +12,10 @@
     "debug": "~2.1.1",
     "express": "~4.11.1",
     "jade": "~1.9.1",
+    "log4js": "^1.1.1",
+    "mailgun-js": "^0.10.1",
     "method-override": "^2.3.1",
     "mongoose": "^3.8.24",
-    "morgan": "~1.5.1",
-    "serve-favicon": "~2.2.0"
+    "node-ses": "^2.0.5"
   }
 }
