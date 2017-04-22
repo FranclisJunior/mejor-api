@@ -1,5 +1,4 @@
-var bodyParser = require('body-parser'),
-    cookieParser = require('cookie-parser'),
+var cookieParser = require('cookie-parser'),
     cors = require('cors'),
     express = require('express'),
     log4js = require('log4js'),
@@ -17,15 +16,12 @@ var index = require('./src/controllers/index'),
     courses = require('./src/controllers/courses'),
     users = require('./src/controllers/users');
 
-
-
 var app = express();
 
 // Controllers setup
 app.use('/', index);
 app.use('/api/courses', courses);
 app.use('/api/users', users);
-
 
 // View engine setup
 app.set('views', path.join(__dirname, 'src/views'));
@@ -41,8 +37,7 @@ log4js.configure({
 });
 
 // Others setups
-app.use(bodyParser.json({ extended: true }));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -53,7 +48,6 @@ app.use(function(req, res, next) {
     err.status = 404;
     next(err);
 });
-
 
 // Development error handler will print stacktrace
 if (app.get('env') === 'development') {

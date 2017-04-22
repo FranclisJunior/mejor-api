@@ -1,15 +1,13 @@
 var express = require('express'),
+    bodyParser = require('body-parser'),
     router = express.Router(),
     mongoose = require('mongoose'),
-    bodyParser = require('body-parser'), //parses information from POST
     log4js = require('log4js'),
     emailService = require('../util/email.service');
 
 var logger = log4js.getLogger('USERS');
 
 router.use(bodyParser.json({ extended: true }));
-
-//Enable CORS
 router.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:4200");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
