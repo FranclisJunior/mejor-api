@@ -59,6 +59,7 @@ function buildEmailTemplate(user) {
     template = template.replace(/USER_NAME/, user.name);
     template = template.replace(/COURSE_NAME/, user.course.title.replace('_',' '));
     template = template.replace(/COURSE_PRICE/, user.course.priceDiscount);
+    // TODO Create custom link
 
     return template;
 }
