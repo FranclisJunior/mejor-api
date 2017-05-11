@@ -4,8 +4,8 @@ var log4js = require('log4js'),
     fs = require('fs');
 
 var clientAmazonSES = ses.createClient({
-    key: 'AKIAIEC2EG263UM63IGQ',
-    secret: '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'
+    key: '<KEY>',
+    secret: '<SECRET>'
 });
 
 var clientMailGun = new Mailgun({
